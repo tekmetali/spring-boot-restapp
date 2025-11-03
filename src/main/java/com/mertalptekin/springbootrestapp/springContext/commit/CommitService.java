@@ -15,10 +15,8 @@ public class CommitService {
         this.commit = commit;
     }
 
-
     public void save() {
         commit.commitChanges();
     }
-
 
 }

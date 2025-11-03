@@ -1,7 +1,7 @@
 package com.mertalptekin.springbootrestapp;
 
 
-import com.mertalptekin.springbootrestapp.springContext.logger.TextLogger;
+import com.mertalptekin.springbootrestapp._demo.springContext.logger.TextLogger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

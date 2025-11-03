@@ -1,4 +1,4 @@
-package com.mertalptekin.springbootrestapp.springContext.commit;
+package com.mertalptekin.springbootrestapp._demo.springContext.commit;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;

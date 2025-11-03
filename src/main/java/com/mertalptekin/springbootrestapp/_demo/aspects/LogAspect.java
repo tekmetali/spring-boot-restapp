@@ -1,6 +1,5 @@
-package com.mertalptekin.springbootrestapp.aspects;
+package com.mertalptekin.springbootrestapp._demo.aspects;
 
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
@@ -9,22 +8,22 @@ import org.springframework.stereotype.Component;
 public class LogAspect {
 
     // Method çalıştırılmadan önce çalışır
-    @Before(value = "@annotation(com.mertalptekin.springbootrestapp.aspects.Log)")
+    @Before(value = "@annotation(com.mertalptekin.springbootrestapp._demo.aspects.Log)")
     public void logBeforeMethod() {
         System.out.println("A method is about to be executed.");
     }
     // Method çalıştırıldıktan sonra çalışır
-    @After(value = "@annotation(com.mertalptekin.springbootrestapp.aspects.Log)")
+    @After(value = "@annotation(com.mertalptekin.springbootrestapp._demo.aspects.Log)")
     public void logAfterMethod() {
         System.out.println("A method has been executed.");
     }
     // Method başarılı bir şekilde tamamlandığında çalışır. Ve Methodun dönüş değerine erişebilir
-    @AfterReturning(value = "@annotation(com.mertalptekin.springbootrestapp.aspects.Log)")
+    @AfterReturning(value = "@annotation(com.mertalptekin.springbootrestapp._demo.aspects.Log)")
     public void logAfterReturning() {
         System.out.println("A method has successfully returned.");
     }
     // Method çalıştırılmadan önce ve sonra çalışır. Genel olarak bütün method çağrılarını sarmak için kullanılır
-    @Around(value = "@annotation(com.mertalptekin.springbootrestapp.aspects.Log)")
+    @Around(value = "@annotation(com.mertalptekin.springbootrestapp._demo.aspects.Log)")
     public void logAroundMethod(org.aspectj.lang.ProceedingJoinPoint joinPoint) throws Throwable {
 
         // Not: Arroud advice ile method içerisindeki tüm sürece hakim olduğumuzdan sadece bunun üzerinden süreci yönetebiliriz.
@@ -51,7 +50,7 @@ public class LogAspect {
     }
 
     // Methodda exception fırlatıldığında çalışır
-    @AfterThrowing(value = "@annotation(com.mertalptekin.springbootrestapp.aspects.Log)")
+    @AfterThrowing(value = "@annotation(com.mertalptekin.springbootrestapp._demo.aspects.Log)")
     public void logAfterThrowing() {
         System.out.println("A method has thrown an exception.");
     }

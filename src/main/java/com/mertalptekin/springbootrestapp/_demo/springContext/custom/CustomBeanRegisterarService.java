@@ -1,4 +1,4 @@
-package com.mertalptekin.springbootrestapp.springContext.custom;
+package com.mertalptekin.springbootrestapp._demo.springContext.custom;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;

@@ -1,8 +1,8 @@
-package com.mertalptekin.springbootrestapp.controller;
+package com.mertalptekin.springbootrestapp.presentation.controller;
 
 
-import com.mertalptekin.springbootrestapp.service.AspectService;
-import com.mertalptekin.springbootrestapp.springContext.custom.WebRequestBasedBean;
+import com.mertalptekin.springbootrestapp.domain.service.AspectService;
+import com.mertalptekin.springbootrestapp._demo.springContext.custom.WebRequestBasedBean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

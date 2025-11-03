@@ -1,10 +1,10 @@
 package com.mertalptekin.springbootrestapp;
 
-import com.mertalptekin.springbootrestapp.springContext.commit.CommitService;
-import com.mertalptekin.springbootrestapp.springContext.commit.ICommit;
-import com.mertalptekin.springbootrestapp.springContext.custom.MyCustomBean;
-import com.mertalptekin.springbootrestapp.springContext.logger.DemoService;
-import com.mertalptekin.springbootrestapp.springContext.logger.ILogger;
+import com.mertalptekin.springbootrestapp._demo.springContext.commit.CommitService;
+import com.mertalptekin.springbootrestapp._demo.springContext.commit.ICommit;
+import com.mertalptekin.springbootrestapp._demo.springContext.custom.MyCustomBean;
+import com.mertalptekin.springbootrestapp._demo.springContext.logger.DemoService;
+import com.mertalptekin.springbootrestapp._demo.springContext.logger.ILogger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;

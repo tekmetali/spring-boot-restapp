@@ -1,4 +1,4 @@
-package com.mertalptekin.springbootrestapp.springContext.logger;
+package com.mertalptekin.springbootrestapp._demo.springContext.logger;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
-package com.mertalptekin.springbootrestapp.service;
+package com.mertalptekin.springbootrestapp.domain.service;
 
-import com.mertalptekin.springbootrestapp.aspects.Log;
+import com.mertalptekin.springbootrestapp._demo.aspects.Log;
 import org.springframework.stereotype.Service;
 
 @Service

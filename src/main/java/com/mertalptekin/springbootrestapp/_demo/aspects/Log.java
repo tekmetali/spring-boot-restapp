@@ -1,4 +1,4 @@
-package com.mertalptekin.springbootrestapp.aspects;
+package com.mertalptekin.springbootrestapp._demo.aspects;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

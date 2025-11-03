@@ -1,4 +1,4 @@
-package com.mertalptekin.springbootrestapp.springContext.logger;
+package com.mertalptekin.springbootrestapp._demo.springContext.logger;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;

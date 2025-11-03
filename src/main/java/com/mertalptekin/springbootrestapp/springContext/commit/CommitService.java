@@ -1,17 +1,17 @@
-package com.mertalptekin.springbootrestapp.service;
+package com.mertalptekin.springbootrestapp.springContext.commit;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CommitService {
 
-    // artık primary bakma
-    @Qualifier("dbCommit")
-    @Autowired
-    private ICommit commit;
 
+    private final ICommit commit;
+
+    public CommitService(@Qualifier("dbCommit") ICommit commit) {
+        this.commit = commit;
+    }
 
 
     public void save() {

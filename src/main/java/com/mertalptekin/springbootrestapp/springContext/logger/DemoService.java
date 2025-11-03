@@ -1,8 +1,7 @@
-package com.mertalptekin.springbootrestapp.service;
+package com.mertalptekin.springbootrestapp.springContext.logger;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 // Streotype Bean tanımı

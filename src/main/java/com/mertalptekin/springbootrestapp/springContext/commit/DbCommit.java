@@ -1,9 +1,9 @@
-package com.mertalptekin.springbootrestapp.service;
+package com.mertalptekin.springbootrestapp.springContext.commit;
 
 import org.springframework.stereotype.Component;
 
 @Component("dbCommit") // Bean ismi dbCommit olarak tanımlandı
-public class DbCommit  implements ICommit{
+public class DbCommit  implements ICommit {
     @Override
     public void commitChanges() {
         System.out.println("Db Commit changes");

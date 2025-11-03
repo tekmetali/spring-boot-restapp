@@ -1,13 +1,13 @@
 package com.mertalptekin.springbootrestapp;
 
 
-import com.mertalptekin.springbootrestapp.service.TextLogger;
+import com.mertalptekin.springbootrestapp.springContext.logger.TextLogger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+// Configuration sınıfında manuel bean tanımlamaları yapılabilir.
 @Configuration
 public class AppConfig {
-
 
     @Bean(name = "getAppName1")
     public String getAppName() {

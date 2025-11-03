@@ -1,4 +1,4 @@
-package com.mertalptekin.springbootrestapp.service;
+package com.mertalptekin.springbootrestapp.springContext.logger;
 
 // @Service, @Component gibi stereotype bean tanımları sadece class için kullanılır. İnterfacelerde kullanılmaz.
 public interface ILogger {

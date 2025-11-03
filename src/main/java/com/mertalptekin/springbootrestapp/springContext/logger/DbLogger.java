@@ -1,4 +1,4 @@
-package com.mertalptekin.springbootrestapp.service;
+package com.mertalptekin.springbootrestapp.springContext.logger;
 
 import org.springframework.stereotype.Component;
 

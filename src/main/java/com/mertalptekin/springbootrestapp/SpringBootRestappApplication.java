@@ -1,10 +1,12 @@
 package com.mertalptekin.springbootrestapp;
 
-import com.mertalptekin.springbootrestapp.service.*;
+import com.mertalptekin.springbootrestapp.springContext.commit.CommitService;
+import com.mertalptekin.springbootrestapp.springContext.commit.ICommit;
+import com.mertalptekin.springbootrestapp.springContext.logger.DemoService;
+import com.mertalptekin.springbootrestapp.springContext.logger.ILogger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 import java.util.Scanner;
@@ -14,8 +16,17 @@ public class SpringBootRestappApplication {
 
     public static void main(String[] args) {
        ApplicationContext context = SpringApplication.run(SpringBootRestappApplication.class, args);
+        runBeanSample(context);
+    }
 
-       String name =  context.getBean("getAppName1",String.class); // Retrieve the bean to demonstrate it's working
+    // Manuel , Config dosyasından Manuel Bean tanımı
+    @Bean
+    public String getAppName() { // Bean isimleri method ismi ile ayni olur
+        return "Spring Boot Rest App";
+    }
+
+    public static   void runBeanSample(ApplicationContext context) {
+        String name =  context.getBean("getAppName1",String.class); // Retrieve the bean to demonstrate it's working
         System.out.println("Bean " + name);
 
         DemoService demoService = context.getBean(DemoService.class);
@@ -34,29 +45,16 @@ public class SpringBootRestappApplication {
         ILogger logger = context.getBean(loggerBeanName,ILogger.class);
         logger.log("Hello World");
 
-
         // Eğer Bean name kullanmıyorsak @Primary ile birincil bean tanımı yapılabilir.
         ICommit commit = context.getBean("cacheCommit",ICommit.class);
         commit.commitChanges();
 
 
-//        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext();
-
-        // Not: registerBean metodu ile manuel bean tanımı yapılabilir.
-        //annotationConfigApplicationContext.registerBean("dbLogger", com.mertalptekin.springbootrestapp.service.DbLogger.class);
-
-
-        // Qualfier üzerinden ICommit bean çağırma
-        CommitService commitService = context.getBean("dbCommit",CommitService.class);
+        CommitService commitService = context.getBean("dbCommit", CommitService.class); // hatalı kod
         commitService.save();
 
-
-    }
-
-    // Manuel , Config dosyasından Manuel Bean tanımı
-    @Bean
-    public String getAppName() { // Bean isimleri method ismi ile ayni olur
-        return "Spring Boot Rest App";
+        CommitService commitService1 = context.getBean(CommitService.class);
+        commitService1.save();
     }
 
 }

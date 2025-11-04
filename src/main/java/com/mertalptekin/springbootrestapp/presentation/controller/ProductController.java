@@ -12,6 +12,7 @@ import com.mertalptekin.springbootrestapp.application.product.getProductById.Get
 import com.mertalptekin.springbootrestapp.application.product.getProductById.GetProductByIdResponse;
 import com.mertalptekin.springbootrestapp.application.product.updateProduct.UpdateProductRequest;
 import com.mertalptekin.springbootrestapp.application.product.updateProduct.UpdateProductResponse;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +22,6 @@ import java.net.URI;
 @RestController
 @RequestMapping("/api/products") // Genel product endpoint'i
 public class ProductController {
-
-
 
     // DIP'e uygun olarak handler interface'i üzerinden bağımlılık enjekte ediliyor.
     // Presentation katmanı, Application katmanına bağımlıdır. Application katmanındaki handler interface'ini kullanılara Application katmanındanı çağrı zayıf bağımlılık oluşturulmuş olur.
@@ -59,7 +58,7 @@ public class ProductController {
     // Event ve Request işlemleri için genel olarak modern yaklaşımlarda record yapısı tercih edilmektedir.
     // POST işlemlerinde genel yapı 201 Created dönmektir.
     @PostMapping
-    public ResponseEntity<CreateProductResponse> createProduct(@RequestBody CreateProductRequest request) {
+    public ResponseEntity<CreateProductResponse> createProduct(@Valid @RequestBody CreateProductRequest request) {
         // Ürün oluşturma işlemleri burada yapılacak
 
         var response = this.productCreateRequestHandler.handle(request);

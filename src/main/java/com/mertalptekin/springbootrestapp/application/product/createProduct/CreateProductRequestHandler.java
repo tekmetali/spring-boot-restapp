@@ -6,6 +6,8 @@ import com.mertalptekin.springbootrestapp.domain.entity.Product;
 import com.mertalptekin.springbootrestapp.domain.service.product.IProductService;
 import com.mertalptekin.springbootrestapp.infra.service.IEmailSender;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 // ProductService -> Create, UPDATE, DELETE Class düzeyinde bunların ayrılması OCP dir.
@@ -16,11 +18,13 @@ import org.springframework.stereotype.Component;
 public class CreateProductRequestHandler implements IProductRequestHandler<CreateProductRequest,CreateProductResponse> {
 
     private final IProductService productService;
-    private final IEmailSender emailSender;
+    private  final IEmailSender emailSender;
 
-    public CreateProductRequestHandler(IProductService productService,IEmailSender emailSender) {
+
+    public CreateProductRequestHandler(IProductService productService, ApplicationContext applicationContext,    @Value("${email.service}") String emailService) {
         this.productService = productService;
-        this.emailSender = emailSender;
+        // Service Locator Pattern
+        this.emailSender = (IEmailSender) applicationContext.getBean(emailService);
     }
 
     // OCP açık kapalı prensibine uygundur. TDD ile yazılabilir. Her bir use case için ayrı handler yazıldığından dolayı Unit Test yazımı kolaydır. SRP tek sorumluluk prensibine uygundur. Sadece ürün oluşturma işlemi ile ilgilenir.

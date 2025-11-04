@@ -1,0 +1,28 @@
+package com.mertalptekin.springbootrestapp.domain.entity;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.math.BigDecimal;
+
+@Entity
+@Table(name = "products")
+@Setter
+@Getter
+// boş constructor ile çalışması için
+@NoArgsConstructor
+public class Product {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(name = "name", nullable = false, unique = true)
+    private String name;
+
+    @Column(name = "price", nullable = false)
+    private BigDecimal price;
+
+    @Column(name = "stock", nullable = false)
+    private Integer stock;
+
+}

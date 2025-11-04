@@ -19,7 +19,7 @@ public class SpringBootRestappApplication {
 
     public static void main(String[] args) {
        ApplicationContext context = SpringApplication.run(SpringBootRestappApplication.class, args);
-        runBeanSample(context);
+        //runBeanSample(context);
     }
 
     // Manuel , Config dosyasından Manuel Bean tanımı

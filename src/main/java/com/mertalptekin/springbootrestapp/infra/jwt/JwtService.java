@@ -50,7 +50,7 @@ public class JwtService implements IJwtService {
     public boolean isTokenValid(String token, UserDetails userDetails) {
         Claims claims = parseToken(token);
         // Token süresi dolmuş mu ve kullanıcı adı eşleşiyor mu kontrolü
-        if(claims.getExpiration().before(new Date()) && claims.getSubject().equals(userDetails.getUsername())){
+        if(new Date().before(claims.getExpiration()) && claims.getSubject().equals(userDetails.getUsername())){
             return true;
         }
 

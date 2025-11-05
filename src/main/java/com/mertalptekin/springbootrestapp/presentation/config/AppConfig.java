@@ -11,9 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 // Configuration sınıfında manuel bean tanımlamaları yapılabilir.
@@ -21,13 +19,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class AppConfig {
 
 
-    // IUserRepository bean'ini constructor injection ile alıyoruz.
-    // Kullanıcı bilgilerini veritabanından çekmek için kullanacağız.
-    private final IUserRepository userRepository;
     private final CustomUserDetailService customUserDetailService;
 
     public AppConfig(IUserRepository userRepository, CustomUserDetailService customUserDetailService) {
-        this.userRepository = userRepository;
         this.customUserDetailService = customUserDetailService;
     }
 
@@ -40,19 +34,7 @@ public class AppConfig {
         return new TextLogger();
     }
 
-    // Uygulamada oturum açmak için gerekli olan bean tanımlamaları yapıcaz.
 
-    // UserDetailsService bean tanımı, kullanıcı bilgilerini yüklemek için kullanılır.
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        return new UserDetailsService() {
-//            @Override
-//            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//                return userRepository.findByUsername(username)
-//                        .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
-//            }
-//        };
-//    }
 
     @Bean
     public UserDetailsService userDetailsService() {

@@ -44,6 +44,8 @@ public class AuthController {
     @PostMapping("token")
     public ResponseEntity<TokenResponse> token(@RequestBody TokenRequest request){
 
+        // Böyle bir kullanıcı bilgisi User tablosunda var mı? UserDetailsService ile kontrol et.
+        // Username ve Password -> kontrolü yapar.
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             request.username(),
@@ -51,10 +53,11 @@ public class AuthController {
                     )
             );
 
-            // Web Uygulamasıda kullanıcın oturum açtığını belirtmek için SecurityContextHolder kullanılabilir.
-            SecurityContextHolder.getContext().setAuthentication(authentication); // Authentica olan kullanıcı bilgilerini web sunucunada oturum açmak için saklar.
+            // Security Config dosyasında .anyRequest().authenticated()); koddan geçebilmek için. Uygulama üzerinde anlık oturum açmamız gerekiyor.
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
             if(authentication.isAuthenticated()){
+                // oturum açan kullanının sahip olduğu username,password, grantAuthority bilgileri.
                 // authentication.getPrincipal() -> Oturum açan kullanıcının detayları
                 String token = jwtService.generateToken((UserDetails) authentication.getPrincipal());
                 return ResponseEntity.ok(new TokenResponse(token));

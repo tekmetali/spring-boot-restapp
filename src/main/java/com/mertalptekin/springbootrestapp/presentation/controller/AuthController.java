@@ -44,6 +44,7 @@ public class AuthController {
         usr.setPassword(passwordEncoder.encode(request.password()));
         userRepository.save(usr);
 
+
         // Kullanıcı veritabanın kaydı
 
         return ResponseEntity.ok().build();

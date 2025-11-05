@@ -5,8 +5,14 @@ import com.mertalptekin.springbootrestapp.application.auth.RegisterRequest;
 import com.mertalptekin.springbootrestapp.application.auth.TokenRequest;
 import com.mertalptekin.springbootrestapp.application.auth.TokenResponse;
 import com.mertalptekin.springbootrestapp.domain.entity.User;
+import com.mertalptekin.springbootrestapp.infra.jwt.IJwtService;
 import com.mertalptekin.springbootrestapp.infra.repository.IUserRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,10 +25,14 @@ public class AuthController {
 
     private final PasswordEncoder passwordEncoder;
     private final IUserRepository userRepository;
+    private final IJwtService jwtService;
+    private final AuthenticationManager authenticationManager;
 
-    public AuthController(PasswordEncoder passwordEncoder, IUserRepository userRepository) {
+    public AuthController(PasswordEncoder passwordEncoder, IUserRepository userRepository, IJwtService jwtService, AuthenticationManager authenticationManager) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
+        this.jwtService = jwtService;
+        this.authenticationManager = authenticationManager;
     }
 
     @GetMapping
@@ -33,7 +43,25 @@ public class AuthController {
 
     @PostMapping("token")
     public ResponseEntity<TokenResponse> token(@RequestBody TokenRequest request){
-        return ResponseEntity.ok().build();
+
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.username(),
+                            request.password()
+                    )
+            );
+
+            // Web Uygulamasıda kullanıcın oturum açtığını belirtmek için SecurityContextHolder kullanılabilir.
+            SecurityContextHolder.getContext().setAuthentication(authentication); // Authentica olan kullanıcı bilgilerini web sunucunada oturum açmak için saklar.
+
+            if(authentication.isAuthenticated()){
+                // authentication.getPrincipal() -> Oturum açan kullanıcının detayları
+                String token = jwtService.generateToken((UserDetails) authentication.getPrincipal());
+                return ResponseEntity.ok(new TokenResponse(token));
+            }
+
+            return ResponseEntity.status(401).build();
+
     }
 
     @PostMapping

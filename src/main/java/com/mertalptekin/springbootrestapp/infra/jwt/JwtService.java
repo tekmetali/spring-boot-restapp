@@ -1,5 +1,6 @@
 package com.mertalptekin.springbootrestapp.infra.jwt;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.config.annotation.web.oauth2.resourceserver.JwtDsl;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,6 +29,7 @@ public class JwtService implements IJwtService {
 
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
+                .addClaims(claims) // additional claims setledik, set dersek diğer claimleri ezer.addtional claims ekleme işlemi için addClaims kullanılır.
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30)) // 30 dakika geçerli
                 .signWith(io.jsonwebtoken.SignatureAlgorithm.HS256,
                         io.jsonwebtoken.security.Keys.hmacShaKeyFor(secretKey.getBytes())
@@ -35,8 +37,23 @@ public class JwtService implements IJwtService {
                 .compact();
     }
 
+    // Token parse etme ve içerisindeki claimleri alma
+    public Claims parseToken(String token){
+        return Jwts.parserBuilder()
+                .setSigningKey(io.jsonwebtoken.security.Keys.hmacShaKeyFor(secretKey.getBytes()))
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
     @Override
     public boolean isTokenValid(String token, UserDetails userDetails) {
+        Claims claims = parseToken(token);
+        // Token süresi dolmuş mu ve kullanıcı adı eşleşiyor mu kontrolü
+        if(claims.getExpiration().before(new Date()) && claims.getSubject().equals(userDetails.getUsername())){
+            return true;
+        }
+
         return false;
     }
 }

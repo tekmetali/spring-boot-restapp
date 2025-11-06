@@ -43,6 +43,9 @@ public class SecurityConfig {
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); // Rest servislerde kullanılan session modeli
         http.authorizeHttpRequests(authorizeRequests ->
                 authorizeRequests
+                        .requestMatchers("/swagger-ui/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**").permitAll()
+                        .requestMatchers("/swagger-ui.html").permitAll()
                         .requestMatchers("/api/demo/**").hasAuthority("ROLE_MANAGER")
                         .requestMatchers(("/api/auth/**")).permitAll()
                         .requestMatchers("/h2-console/**").permitAll()

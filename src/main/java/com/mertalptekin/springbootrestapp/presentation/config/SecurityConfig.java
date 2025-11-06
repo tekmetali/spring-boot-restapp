@@ -36,12 +36,13 @@ public class SecurityConfig {
         // H2 Console için frame options'ı devre dışı bırak
         http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()));
 
+        // URL seviyesinde genel bir yetkilendirme politikası belirlemek için hasRole veya hasAuthority kullanabiliriz.
 
 
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); // Rest servislerde kullanılan session modeli
         http.authorizeHttpRequests(authorizeRequests ->
                 authorizeRequests
-                        .requestMatchers("/api/demo/**").permitAll()
+                        .requestMatchers("/api/demo/**").hasAuthority("ROLE_MANAGER")
                         .requestMatchers(("/api/auth/**")).permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
                         .anyRequest().authenticated());

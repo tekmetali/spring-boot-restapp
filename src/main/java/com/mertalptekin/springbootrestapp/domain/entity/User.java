@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 // UserDetails -> Spring Security'nin kullanıcı bilgilerini temsil eden arayüzüdür.
 
@@ -32,12 +33,19 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password; // şifre alanı, hashlenmiş şifre saklanmalı
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles", // ara tablo adı
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private List<Role> roles;
+
 
     // UserDetails interface methods ile kullanıcıya rol tanımı verdik.
     // Role tablasu olurşturmak yerine buradan verdik.
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"),
-                new SimpleGrantedAuthority("ROLE_ADMIN"));
+        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 }

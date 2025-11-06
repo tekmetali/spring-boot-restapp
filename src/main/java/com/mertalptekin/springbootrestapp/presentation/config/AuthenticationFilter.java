@@ -7,12 +7,14 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
 // OncePerRequestFilter ile her istekde araya girip Authorization Header üzerindeki Bearer değerini okuyacağız.
 
@@ -50,9 +52,14 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
             // Token expr değilse ve kullanıcı oturumu veritabnındaki kullanıcı ile eşleşiyorsa, bu userDetails bilgisi ile yeniden uygulamada oturum açmaya çalış.
 
-            String username = jwtService.parseToken(token).getSubject();
+              String username = jwtService.parseToken(token).getSubject();
+//            List<GrantedAuthority> authority = (List<GrantedAuthority>) jwtService.parseToken(token).get("roles");
+//
+
 
             UserDetails userDetails =  this.userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found with username: " + username));
+
+
 
                 // Tokenın validate edilmesi lazım.
                 if(jwtService.isTokenValid(token, userDetails)) {
@@ -71,11 +78,12 @@ public class AuthenticationFilter extends OncePerRequestFilter {
                     // Normal Web uygulamarında cookie ile bunu yönetirdik. Her istekde cookiedan oturum kontrolü yapardık. Ama RestServislerde bu kontrol tokendan yönetilmelidir. Stateless durumsuz bir yapı olması sebebi ile cookie üzerinden bu işlemleri session bazlı yönetemediğimizden dolayı Client Header üzerinden  Authorization: Bearer Token ile token gönderir.
                     // Bizde burada token göre oturum yönetimini anlık yapmalıyız.
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    filterChain.doFilter(request, response);
 
                 } else {
                     System.out.println("Invalid token for user: " + username);
                     // Süreci artık SecurityFilterChain'e devret, SecurityConfig'de tanımlanan kurallar işleyecek.
-                    filterChain.doFilter(request, response);
+                    filterChain.doFilter(request, response); // 401 döner.
                 }
 
 
@@ -88,7 +96,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             //  .requestMatchers("/h2-console/**").permitAll()
             // Süreci SecurityFilterChain'e devret, SecurityConfig'de tanımlanan kurallar işleyecek.
             System.out.println("No Bearer token found in Authorization header.");
-            filterChain.doFilter(request, response);
+            filterChain.doFilter(request, response); // 401 döner.
 
         }
 
